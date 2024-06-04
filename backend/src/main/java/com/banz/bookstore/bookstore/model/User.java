@@ -21,4 +21,12 @@ public class User {
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Authority> authorities = Collections.singleton(Authority.USER);
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 }
