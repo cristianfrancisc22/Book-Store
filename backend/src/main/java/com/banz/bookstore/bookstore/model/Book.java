@@ -20,5 +20,7 @@ public class Book {
     private double price;
     private float rating;
     @ManyToMany
-    private List<Category> category;
+    private List<Category> categories;
+
+
 }
