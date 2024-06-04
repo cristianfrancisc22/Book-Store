@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
+@Table(name = "books")
 @Data
 public class Book {
     @Id
@@ -20,6 +21,11 @@ public class Book {
     private double price;
     private float rating;
     @ManyToMany
+    @JoinTable(
+            name = "books_categories",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private List<Category> categories;
 
 

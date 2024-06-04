@@ -28,7 +28,7 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping("id")
     public ResponseEntity<Book> getBookById(
             @RequestParam("id") Long id) {
         try {
