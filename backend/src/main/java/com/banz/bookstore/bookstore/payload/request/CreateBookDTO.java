@@ -1,7 +1,7 @@
 package com.banz.bookstore.bookstore.payload.request;
 
-import com.banz.bookstore.bookstore.model.Category;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +25,8 @@ public class CreateBookDTO {
     private String description;
     @NotBlank(message = "Publisher cannot be blank")
     private String publisher;
-    @NotBlank(message = "ImageLink cannot be blank")
-    private String imageLink;
-    @NotBlank(message = "Price cannot be blank")
+    @NotNull(message = "Price cannot be blank")
     private double price;
     @UniqueElements(message = "Categories must be unique")
-    private List<Category> categories;
+    private List<String> categories;
 }
