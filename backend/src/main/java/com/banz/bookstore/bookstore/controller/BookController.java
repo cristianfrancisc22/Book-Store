@@ -23,14 +23,15 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> getANumberOfBooks(@RequestParam(defaultValue = "20") int count) {
+    public ResponseEntity<List<Book>> getNumberOfBooks(
+            @RequestParam(defaultValue = "20") int count) {
         List<Book> books = bookService.getBooks(count);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @GetMapping("id")
+    @GetMapping("id/{id}")
     public ResponseEntity<Book> getBookById(
-            @RequestParam("id") Long id) {
+            @PathVariable Long id) {
         try {
             Book book = bookService.findById(id);
             return new ResponseEntity<>(book, HttpStatus.OK);
@@ -41,13 +42,23 @@ public class BookController {
 
     @PostMapping("/add")
     public ResponseEntity<?> createBook(
-            @Valid @RequestPart("book") CreateBookDTO createBookDTO,
-            @RequestPart("image") MultipartFile image) {
+            @Valid @ModelAttribute CreateBookDTO createBookDTO,
+            @ModelAttribute MultipartFile image) {
         try {
             Book book = bookService.createBook(createBookDTO, image);
             return new ResponseEntity<>(book, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to create book", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable Long id) {
+        try {
+            bookService.deleteBook(id);
+            return new ResponseEntity<>("Book deleted with id: " + id + " deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
